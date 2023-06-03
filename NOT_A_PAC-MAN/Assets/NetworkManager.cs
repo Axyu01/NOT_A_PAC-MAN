@@ -7,8 +7,10 @@ using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
 {
-    public static NetworkManager Instance { get { return instance; } private set { instance=value} }
+    public static NetworkManager Instance { get { return instance; } private set { instance = value; } }
     private static NetworkManager instance=null;
+    TcpClient tcpClient;
+    NetworkStream stream;
     const int PORT_NUMBER = 50000;
     // Start is called before the first frame update
     void Start()
@@ -24,8 +26,6 @@ public class NetworkManager : MonoBehaviour
     {
         
     }
-    TcpClient tcpClient;
-    NetworkStream stream;
     // Start is called before the first frame update
     public void StartListening()
     {

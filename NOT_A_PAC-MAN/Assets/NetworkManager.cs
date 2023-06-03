@@ -72,10 +72,12 @@ public class NetworkManager : MonoBehaviour
             byte[] buffer = new byte[1024];
             stream.Read(buffer, 0, buffer.Length);
             Debug.Log("Client: " + System.Text.Encoding.UTF8.GetString(buffer));
+            
             Thread.Sleep(200);
         }
     }
-    static public Event RemoteMsgEvent;
+    public delegate void GetMsgThreadDelegate(string message);
+    public GetMsgThreadDelegate RemoteMsgEvent;
     private void OnDestroy()
     {
         Stop();

@@ -11,7 +11,7 @@ public class NetworkManager : MonoBehaviour
     private static NetworkManager instance=null;
     TcpClient tcpClient;
     NetworkStream stream;
-    const int PORT_NUMBER = 50000;
+    const int PORT_NUMBER = 50001;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,7 +72,7 @@ public class NetworkManager : MonoBehaviour
             byte[] buffer = new byte[1024];
             stream.Read(buffer, 0, buffer.Length);
             Debug.Log("Client: " + System.Text.Encoding.UTF8.GetString(buffer));
-            Thread.Sleep(1000);
+            Thread.Sleep(200);
         }
     }
     static public Event RemoteMsgEvent;

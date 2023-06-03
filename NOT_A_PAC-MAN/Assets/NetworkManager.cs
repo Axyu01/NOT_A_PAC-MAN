@@ -59,7 +59,7 @@ public class NetworkManager : MonoBehaviour
         tcpClient.Close();
 
     }
-    public void sendMsg(string message)
+    public void SendMsg(string message)
     {
         byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
         stream.Write(buffer, 0, buffer.Length);

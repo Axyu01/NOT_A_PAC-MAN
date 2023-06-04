@@ -4,6 +4,13 @@ using UnityEngine;
 
 public interface IMoveable
 {
-    public void SetMoveDirection(Vector2 direction);
-    public void SetPosition(Vector2 direction);
+    struct dir // niech kontroler podaje tylko jedna naraz, inaczej bedzie trzeba ustalic priorytet osi
+    {
+        public bool up;
+        public bool down;
+        public bool left;
+        public bool right;
+    }
+    public void SetMoveDirection(dir dir);
+    public void SetPosition(Vector2 position);
 }

@@ -4,7 +4,7 @@
 # 2 - ghost spawner
 # 3 - pac-man spawner
 # 4 - points
-# 420 - power-up
+# 5 - power-up
 # first number: how much arrays are there
 # second number: how long those arrays are
 # if int not provided rest of an array is filed with 0's.

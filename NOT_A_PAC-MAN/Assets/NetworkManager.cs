@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour
     NetworkStream stream;
     const int PORT_NUMBER = 50001;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance == null)
             instance = this;

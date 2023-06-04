@@ -5,12 +5,13 @@ using UnityEngine;
 using System;
 using System.IO;
 
-public class TextToMapParser :MonoBehaviour
+public class TextToMapParser : MonoBehaviour
 {
+    public int[][] arrays;
     public TextAsset text;
     private void Start()
     {
-        int[][] arrays=LoadArraysFromFile(text,out int y ,out int x);
+        arrays = LoadArraysFromFile(text, out int y, out int x);
         // Print the loaded array of arrays for verification
         for (int i = 0; i < y; i++)
         {

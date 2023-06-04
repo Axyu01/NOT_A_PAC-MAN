@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IMoveable
 {
-    // Start is called before the first frame update
+    GameObject player;
+    private float speed = 1f;
+    
     void Start()
     {
-
+        player = gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetMoveDirection(Vector2 direction)
     {
 
     }
-    public void SetMoveDirection(Vector2 direction)
+
+    public void SetPosition(Vector2 direction)
     {
 
     }

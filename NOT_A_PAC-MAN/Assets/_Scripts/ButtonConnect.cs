@@ -26,12 +26,12 @@ public class ButtonConnect : MonoBehaviour
     void getMsg(string message)
     {
         Debug.Log("Pressed!");
-        if (RemoteFunction.GetFunctionName(message)=="StartCharacterLobby")
+        if (RemoteFunction.GetFunctionName(message)=="StartCharacterLobby")//start character picking
         {
             connectMenu.SetActive(false);
             chooseCharacterMenu.SetActive(true);
         }
-        else if (RemoteFunction.GetFunctionName(message) == "BadNickname")
+        else if (RemoteFunction.GetFunctionName(message) == "BadNickname")//for nickname repeat
         {
             serverInfoText.text = RemoteFunction.GetFunctionArguments(message)[0];
             serverInfo.SetActive(true);

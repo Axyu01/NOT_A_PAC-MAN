@@ -606,7 +606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &426663930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -744,6 +744,10 @@ PrefabInstance:
     - target: {fileID: 4359633672269920856, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
       propertyPath: m_Name
       value: ChooseGhost (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757834696052093694, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
+      propertyPath: characterID
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
@@ -1305,6 +1309,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChooseGhost (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4757834696052093694, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
+      propertyPath: characterID
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
 --- !u!224 &979574864 stripped
@@ -1533,6 +1541,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 426663930}
     m_Modifications:
+    - target: {fileID: 235311149018598836, guid: 52c0ee2a37f54d64ea550957bbb4b87b, type: 3}
+      propertyPath: characterID
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 367422000882656450, guid: 52c0ee2a37f54d64ea550957bbb4b87b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Pac player name
+      objectReference: {fileID: 0}
     - target: {fileID: 8644859443452945919, guid: 52c0ee2a37f54d64ea550957bbb4b87b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2192,6 +2208,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChooseGhost (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4757834696052093694, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
+      propertyPath: characterID
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
 --- !u!224 &1809133039 stripped
@@ -2449,7 +2469,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1898259599}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 426663931}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: ClickReady
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1898259599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,6 +2627,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ButtonConnect, Assembly-CSharp
         m_MethodName: OnConnectedToServer
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 940294344}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

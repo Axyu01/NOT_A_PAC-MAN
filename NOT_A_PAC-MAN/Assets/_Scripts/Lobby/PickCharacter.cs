@@ -30,11 +30,13 @@ public class PickCharacter : MonoBehaviour
         {
             string[] args=RemoteFunction.GetFunctionArguments(message);
             string nick = args[0];
+            if (int.Parse(args[1]) != characterID)
+                return;
             if(nick=="")
             {
                 pickText.text = "click this button to pick character!";
             }
-            else if (int.Parse(args[1])==characterID)
+            else
             { 
                 pickText.text = $"{nick} picked this character!";
             }

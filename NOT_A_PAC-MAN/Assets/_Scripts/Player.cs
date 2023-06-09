@@ -6,7 +6,9 @@ public class Player : MonoBehaviour, IMoveable
 {
     GameObject player;
     private float speed = 1f;
-    int dirX, dirY = 0;
+    Vector2Int dir = Vector2Int.zero;
+    public Vector2Int Direction { get { return dir; } private set { dir = value; } }
+    public Vector2 Position { get { return transform.position; }}//moze overengineering ale co tam xd,bedzie czytelne w kontrolerze
     Rigidbody2D rb;
     void Start()
     {
@@ -21,19 +23,21 @@ public class Player : MonoBehaviour, IMoveable
 
     private void applyMovement()
     {
-        rb.AddForce(new Vector2(dirX,dirY)*speed);
+        rb.velocity = new Vector2(dir.x, dir.y) * speed;
+        //rb.AddForce(new Vector2(dir.x,dir.y)*speed);
     }
 
-    public void SetMoveDirection(IMoveable.dir dir)
+    public void SetMoveDirection(IMoveable.dir IDir)
     {
-        dirX = (dir.up == true ? 1 : 0);
-        dirX = (dir.down == true ? -1 : 0);
-        dirY = (dir.right == true ? 1 : 0);
-        dirY = (dir.left == true ? -1 : 0);
+        dir = Vector2Int.zero;
+        dir.y += (IDir.up == true ? 1 : 0);
+        dir.y += (IDir.down == true ? -1 : 0);
+        dir.x += (IDir.right == true ? 1 : 0);
+        dir.x += (IDir.left == true ? -1 : 0);
     }
 
-    public void SetPosition(Vector2 direction)
+    public void SetPosition(Vector2 position)
     {
-
+        gameObject.transform.position = position;
     }
 }

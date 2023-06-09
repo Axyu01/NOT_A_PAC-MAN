@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
@@ -17,6 +18,8 @@ public class LobbyManager : MonoBehaviour
     Text serverInfoText;
     [SerializeField]
     Text playerCountText;
+
+    bool loadScene = false;
     void Start()
     {
         NetworkManager.Instance.RemoteMsgEvent += readReady;
@@ -26,10 +29,13 @@ public class LobbyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(loadScene)
+            SceneManager.LoadScene("SosivoTestScene");
+        readyTick.SetActive(ready);
     }
     public void ClickReady()
     {
+        NetworkManager.Instance.SendMsg("GameStart();");
         if(ready)
             NetworkManager.Instance.SendMsg($"SetNotReady();");
         else
@@ -65,10 +71,10 @@ public class LobbyManager : MonoBehaviour
     private void updateReady(bool val)
     {
         ready= val;
-        readyTick.SetActive(val);
     }
     private void StartGame()
     {
+        loadScene = true;//load scene can be called only from main thread
         Debug.Log("Game Started");
     }
 }

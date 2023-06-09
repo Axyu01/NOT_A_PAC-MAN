@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 using UnityEngine;
+using System.Linq;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -12,13 +13,20 @@ public class NetworkManager : MonoBehaviour
     TcpClient tcpClient;
     NetworkStream stream;
     const int PORT_NUMBER = 50001;
+    public delegate void GetMsgThreadDelegate(string message);
+    public GetMsgThreadDelegate RemoteMsgEvent;
     // Start is called before the first frame update
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
+        if (instance != null)
+        {
             Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -36,8 +44,9 @@ public class NetworkManager : MonoBehaviour
         tcpClient = new TcpClient();
         tcpClient.Connect("localhost",PORT_NUMBER);
         stream = tcpClient.GetStream();
-        getMsgThread = new Thread(getMsg);
-        getMsgThread.Start();
+        StartCoroutine(getMsg());
+        //getMsgThread = new Thread(getMsg);
+        //getMsgThread.Start();
     }
     public void StartListening(string serverAdress)
     {
@@ -49,13 +58,15 @@ public class NetworkManager : MonoBehaviour
         tcpClient.Connect(IPAddress.Parse(serverAdress),PORT_NUMBER);
         Debug.Log("Connected to " + serverAdress);
         stream = tcpClient.GetStream();
-        getMsgThread = new Thread(getMsg);
-        getMsgThread.Start();
+        StartCoroutine(getMsg());
+        //getMsgThread = new Thread(getMsg);
+        //getMsgThread.Start();
     }
     public void Stop()
     {
-        if (getMsgThread != null)
-            getMsgThread.Abort();
+        StopAllCoroutines();
+        //if (getMsgThread != null)
+            //getMsgThread.Abort();
         tcpClient.Close();
 
     }
@@ -64,20 +75,30 @@ public class NetworkManager : MonoBehaviour
         byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
         stream.Write(buffer, 0, buffer.Length);
     }
-    Thread getMsgThread;
-    void getMsg()
+    //Thread getMsgThread;
+    IEnumerator getMsg()
     {
         while (true)
         {
-            byte[] buffer = new byte[1024];
-            stream.Read(buffer, 0, buffer.Length);
-            Debug.Log("Client: " + System.Text.Encoding.UTF8.GetString(buffer));
-            
-            Thread.Sleep(200);
+            if (stream.DataAvailable)
+            {
+                byte[] buffer = new byte[1024];
+                stream.Read(buffer, 0, buffer.Length);
+                string buffer_message = System.Text.Encoding.UTF8.GetString(buffer);
+                //Debug.Log("Client: " + buffer_message);
+                string[] functions=buffer_message.Split(';');
+                functions =functions.Take(functions.Length - 1).ToArray();//remove last msg
+                //if(functions.Length > 0)
+                    //Debug.Log($"first: {functions[0]} last: {functions[functions.Length-1]}");
+                foreach (string function in functions)
+                {
+                    RemoteMsgEvent?.Invoke(function);
+                }
+            }
+
+            yield return new WaitForSeconds(0.01f);
         }
     }
-    public delegate void GetMsgThreadDelegate(string message);
-    public GetMsgThreadDelegate RemoteMsgEvent;
     private void OnDestroy()
     {
         Stop();

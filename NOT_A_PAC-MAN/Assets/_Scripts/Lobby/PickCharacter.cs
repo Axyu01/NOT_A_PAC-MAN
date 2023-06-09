@@ -22,7 +22,7 @@ public class PickCharacter : MonoBehaviour
     }
     public void PickChampion(string nick)
     {
-        NetworkManager.Instance.SendMsg($"PickChampion({nick},{characterID})");
+        NetworkManager.Instance.SendMsg($"PickChampion({nick},{characterID});");
     }
     void setChampion(string message)
     {

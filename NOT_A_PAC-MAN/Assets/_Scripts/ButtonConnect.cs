@@ -25,7 +25,6 @@ public class ButtonConnect : MonoBehaviour
     }
     void getMsg(string message)
     {
-        Debug.Log("Pressed!");
         if (RemoteFunction.GetFunctionName(message)=="StartCharacterLobby")//start character picking
         {
             connectMenu.SetActive(false);

@@ -16,11 +16,11 @@ public class MapGen : MonoBehaviour
 
     void CreateMap(int[][] map)
     {
-        for (int i = 0; i < map.Length; i++)
+        for (int y = 0; y < map.Length; y++)
         {
-            for (int j = 0; j < map[i].Length; j++)
+            for (int x = 0; x < map[y].Length; x++)
             {
-                Instantiate(objects[map[j][i]], transform.position - new Vector3(i, j, 0), Quaternion.identity);
+                Instantiate(objects[map[y][x]], transform.position + new Vector3(x, -y, 0), Quaternion.identity);
             }
         }
     }

@@ -20,7 +20,7 @@ public class TextToMapParser : MonoBehaviour
             {
                 arrayStr += arrays[i][j] + " ";
             }
-            Debug.Log(arrayStr);
+            //Debug.Log(arrayStr);
         }
     }
 

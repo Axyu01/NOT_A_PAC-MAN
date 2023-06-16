@@ -18,7 +18,7 @@ public class MapConversion : MonoBehaviour
 
         Queue mapLayout = new Queue();
 
-        GameObject[] arr = GameObject.FindGameObjectsWithTag("point").Concat(GameObject.FindGameObjectsWithTag("powerup").Concat(GameObject.FindGameObjectsWithTag("pacmanSpawner").Concat(GameObject.FindGameObjectsWithTag("ghostSpawner").Concat(GameObject.FindGameObjectsWithTag("wall").Concat(GameObject.FindGameObjectsWithTag("empty")))))).ToArray();
+        GameObject[] arr = GameObject.FindGameObjectsWithTag("pacman").Concat(GameObject.FindGameObjectsWithTag("ghost").Concat(GameObject.FindGameObjectsWithTag("point").Concat(GameObject.FindGameObjectsWithTag("powerup").Concat(GameObject.FindGameObjectsWithTag("pacmanSpawner").Concat(GameObject.FindGameObjectsWithTag("ghostSpawner").Concat(GameObject.FindGameObjectsWithTag("wall").Concat(GameObject.FindGameObjectsWithTag("empty")))))))).ToArray();
         var walls = GameObject.FindGameObjectsWithTag("wall");
         var floors = GameObject.FindGameObjectsWithTag("empty");
 
@@ -45,13 +45,24 @@ public class MapConversion : MonoBehaviour
                     mapLayout.Enqueue('1');
                     break;
 
+
                 case "ghostSpawner":
                     mapLayout.Enqueue('2');
+                    break;
+
+                case "ghost":
+                    mapLayout.Enqueue('2');
+                    break;
+
+
+                case "pacman":
+                    mapLayout.Enqueue('3');
                     break;
 
                 case "pacmanSpawner":
                     mapLayout.Enqueue('3');
                     break;
+
 
                 case "point":
                     mapLayout.Enqueue('4');
@@ -67,12 +78,17 @@ public class MapConversion : MonoBehaviour
 
         var columns_amount = (xMax - xMin) + 1;
         var rows_amount = (yMax - yMin) + 1;
-        string name = "essa";
+        int n = 0;
+        while (File.Exists("Assets/Maps/" + "Map_" + n + ".txt"))
+        {
+            n++;
+        }
+        string name = "Map_" + n;
         string newMap = "Assets/Maps/" + name + ".txt";
 
         using (StreamWriter newFile = File.CreateText(newMap))
         {
-            newFile.WriteLine(columns_amount + " " + rows_amount + "\n");
+            newFile.WriteLine(columns_amount + " " + rows_amount);
             for (int i = 0; i < rows_amount; i++)
             {
                 for (int j = 0; j < columns_amount; j++)

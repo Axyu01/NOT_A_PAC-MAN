@@ -9,7 +9,7 @@ public class TextToMapParser : MonoBehaviour
 {
     public int[][] arrays;
     public TextAsset text;
-    private void Start()
+    private void Awake()
     {
         arrays = LoadArraysFromFile(text, out int y, out int x);
         // Print the loaded array of arrays for verification
@@ -20,7 +20,7 @@ public class TextToMapParser : MonoBehaviour
             {
                 arrayStr += arrays[i][j] + " ";
             }
-            Debug.Log(arrayStr);
+            //Debug.Log(arrayStr);
         }
     }
 
@@ -44,8 +44,8 @@ public class TextToMapParser : MonoBehaviour
             if (arrays == null)
             {
                 // This is the first line, which specifies the dimensions of the array of arrays
-                numArrays = int.Parse(parts[0]);
-                arraySize = int.Parse(parts[1]);
+                numArrays = int.Parse(parts[1]);
+                arraySize = int.Parse(parts[0]);
                 arrays = new int[numArrays][];
 
                 for (int i = 0; i < numArrays; i++)

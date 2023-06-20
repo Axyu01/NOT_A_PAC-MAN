@@ -91,15 +91,12 @@ public class MapConversion : MonoBehaviour
             newFile.WriteLine(columns_amount + " " + rows_amount);
             for (int i = 1; i < rows_amount; i++)
             {
-                for (int i = 0; i < rows_amount; i++)
-                {
-                    for (int j = 0; j < columns_amount; j++)
+                for (int j = 0; j < columns_amount; j++)
                     {
                         newFile.Write(mapLayout.Dequeue());
                         newFile.Write(" ");
                     }
-                }
-                newFile.Write("\n");
+                    newFile.Write("\n");
             }
         }
     }

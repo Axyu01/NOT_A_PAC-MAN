@@ -32,10 +32,19 @@ public class LobbyManager : MonoBehaviour
         if(loadScene)
             SceneManager.LoadScene("SosivoTestScene");
         readyTick.SetActive(ready);
+        if (check_game_readiness == null)
+            check_game_readiness = StartCoroutine(checkGameState());
     }
-    public void ClickReady()
+Coroutine check_game_readiness = null;
+IEnumerator checkGameState()
+{
+    yield return new WaitForSeconds(0.5f);
+        //NetworkManager.Instance.SendMsg($"SetNotReady();");
+        check_game_readiness = null;
+}
+public void ClickReady()
     {
-        NetworkManager.Instance.SendMsg("GameStart();");
+        //NetworkManager.Instance.SendMsg("GameStart();");
         if(ready)
             NetworkManager.Instance.SendMsg($"SetNotReady();");
         else
@@ -63,7 +72,7 @@ public class LobbyManager : MonoBehaviour
         {
             playerCountText.text= $"Players {RemoteFunction.GetFunctionArguments(message)[0]}/5";
         }
-        else if (RemoteFunction.GetFunctionName(message) == "GameStart")
+        else if (RemoteFunction.GetFunctionName(message) == "Started")
         {
             StartGame();
         }

@@ -6,6 +6,7 @@ public class Controller : MonoBehaviour
 {
     [SerializeField]
     protected Player player;
+    public string characterID;
     // Start is called before the first frame update
     void Start()
     {

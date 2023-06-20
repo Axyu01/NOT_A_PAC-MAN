@@ -8,6 +8,7 @@ using System.Linq;
 
 public class NetworkManager : MonoBehaviour
 {
+    public string localCharacterID="none";
     public static NetworkManager Instance { get { return instance; } private set { instance = value; } }
     private static NetworkManager instance=null;
     TcpClient tcpClient;
@@ -33,6 +34,10 @@ public class NetworkManager : MonoBehaviour
     void Update()
     {
         
+    }
+    public void ResetManager()
+    {
+        localCharacterID = "none";
     }
     // Start is called before the first frame update
     public void StartListening()
@@ -85,7 +90,7 @@ public class NetworkManager : MonoBehaviour
                 byte[] buffer = new byte[1024];
                 stream.Read(buffer, 0, buffer.Length);
                 string buffer_message = System.Text.Encoding.UTF8.GetString(buffer);
-                //Debug.Log("Client: " + buffer_message);
+                Debug.Log("Client: " + buffer_message);
                 string[] functions=buffer_message.Split(';');
                 functions =functions.Take(functions.Length - 1).ToArray();//remove last msg
                 //if(functions.Length > 0)

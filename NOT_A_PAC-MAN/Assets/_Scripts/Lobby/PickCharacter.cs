@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class PickCharacter : MonoBehaviour
 {
     [SerializeField]
-    int characterID;
+    string characterID;
     [SerializeField]
     Text pickText;
+
+    static bool championPicked;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,17 +22,17 @@ public class PickCharacter : MonoBehaviour
     {
 
     }
-    public void PickChampion(string nick)
+    public void PickChampion()
     {
-        NetworkManager.Instance.SendMsg($"PickChampion({nick},{characterID});");
+        NetworkManager.Instance.SendMsg($"PickChampion({characterID});");
     }
     void setChampion(string message)
     {
-        if (RemoteFunction.GetFunctionName(message)=="SetChampion")
+        if (RemoteFunction.GetFunctionName(message)=="PickChampion")//Set Champion
         {
             string[] args=RemoteFunction.GetFunctionArguments(message);
             string nick = args[0];
-            if (int.Parse(args[1]) != characterID)
+            if (!args[1].Equals(characterID))
                 return;
             if(nick=="")
             {

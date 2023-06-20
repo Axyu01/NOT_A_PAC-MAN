@@ -42,6 +42,7 @@ public class ButtonConnect : MonoBehaviour
         Debug.Log("Pressed!");
         if(NetworkManager.Instance!=null && ipText !=null)
         {
+            NetworkManager.Instance.ResetManager();
             NetworkManager.Instance.StartListening(ipText.text);
             NetworkManager.Instance.SendMsg($"SetMyNickname({nickText.text});");
             //Thread.Sleep(1000);

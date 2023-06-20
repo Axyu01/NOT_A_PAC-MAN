@@ -747,7 +747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4757834696052093694, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
       propertyPath: characterID
-      value: 3
+      value: gh4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
@@ -1311,6 +1311,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4757834696052093694, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
       propertyPath: characterID
+      value: gh2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926268458808761224, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1543,7 +1547,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 235311149018598836, guid: 52c0ee2a37f54d64ea550957bbb4b87b, type: 3}
       propertyPath: characterID
-      value: 5
+      value: pac
       objectReference: {fileID: 0}
     - target: {fileID: 367422000882656450, guid: 52c0ee2a37f54d64ea550957bbb4b87b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -2210,7 +2214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4757834696052093694, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
       propertyPath: characterID
-      value: 2
+      value: gh3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
@@ -2575,8 +2579,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ipText: {fileID: 2065188157}
   nickText: {fileID: 935097063}
-  connectMenu: {fileID: 0}
-  chooseCharacterMenu: {fileID: 0}
+  connectMenu: {fileID: 940294344}
+  chooseCharacterMenu: {fileID: 426663929}
   serverInfo: {fileID: 953469971}
   serverInfoText: {fileID: 265756049}
 --- !u!114 &1921345815
@@ -3009,6 +3013,10 @@ PrefabInstance:
     - target: {fileID: 4359633672269920856, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
       propertyPath: m_Name
       value: ChooseGhost
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757834696052093694, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}
+      propertyPath: characterID
+      value: gh1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c5e3ef5f2efb4fb403f1bfd92594c, type: 3}

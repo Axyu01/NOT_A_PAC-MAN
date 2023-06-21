@@ -6,16 +6,11 @@ using UnityEngine;
 public class MapGen : MonoBehaviour
 {
     [SerializeField] public GameObject[] objects;
-    [SerializeField] public TextToMapParser parser;
+    //[SerializeField] public TextToMapParser parser;
     private Vector2 borderMaxXY = Vector2.zero;
     private Vector2 borderMinXY = Vector2.zero;
-    void Start()
-    {
-        //parser = GetComponent<TextToMapParser>();
-        CreateMap(parser.arrays);
-    }
 
-    void CreateMap(int[][] map)
+    public void CreateMap(int[][] map)
     {
         int[][] mapDuplicate = map;
         for (int y = 0; y < map.Length; y++)

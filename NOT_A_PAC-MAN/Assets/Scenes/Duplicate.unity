@@ -1469,6 +1469,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 600395162571243876, guid: df2b2ec933179834cad09d06b9ea8c3d, type: 3}
+      propertyPath: mapGen
+      value: 
+      objectReference: {fileID: 1493691993}
+    - target: {fileID: 600395162571243876, guid: df2b2ec933179834cad09d06b9ea8c3d, type: 3}
       propertyPath: lobbySceneName
       value: Lobby
       objectReference: {fileID: 0}

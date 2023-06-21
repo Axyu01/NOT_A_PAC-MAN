@@ -8,7 +8,6 @@ using System.Linq;
 
 public class NetworkManager : MonoBehaviour
 {
-    public string localCharacterID="none";
     public static NetworkManager Instance { get { return instance; } private set { instance = value; } }
     private static NetworkManager instance=null;
     TcpClient tcpClient;
@@ -37,7 +36,7 @@ public class NetworkManager : MonoBehaviour
     }
     public void ResetManager()
     {
-        localCharacterID = "none";
+        //localCharacterID = "none";
     }
     // Start is called before the first frame update
     public void StartListening()

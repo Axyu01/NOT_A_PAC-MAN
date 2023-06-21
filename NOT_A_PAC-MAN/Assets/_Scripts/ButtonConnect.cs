@@ -27,8 +27,8 @@ public class ButtonConnect : MonoBehaviour
     {
         if (RemoteFunction.GetFunctionName(message)=="StartCharacterLobby")//start character picking
         {
-            connectMenu.SetActive(false);
             chooseCharacterMenu.SetActive(true);
+            connectMenu.SetActive(false);
         }
         else if (RemoteFunction.GetFunctionName(message) == "BadNickname")//for nickname repeat
         {

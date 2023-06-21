@@ -39,7 +39,7 @@ Coroutine check_game_readiness = null;
 IEnumerator checkGameState()
 {
     yield return new WaitForSeconds(0.5f);
-        //NetworkManager.Instance.SendMsg($"SetNotReady();");
+        //NetworkManager.Instance.SendMsg($"IsReady();");
         check_game_readiness = null;
 }
 public void ClickReady()
@@ -74,7 +74,7 @@ public void ClickReady()
         }
         else if (RemoteFunction.GetFunctionName(message) == "Started")
         {
-            StartGame();
+            //StartGame();
         }
     }
     private void updateReady(bool val)

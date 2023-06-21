@@ -6,6 +6,7 @@ public class Player : MonoBehaviour, IMoveable
 {
     GameObject player;
     private float speed = 1f;
+    private bool pacPoweredUp=false;
     Vector2Int dir = Vector2Int.zero;
     public Vector2Int Direction { get { return dir; } private set { dir = value; } }
     public Vector2 Position { get { return transform.position; }}//moze overengineering ale co tam xd,bedzie czytelne w kontrolerze
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour, IMoveable
     {
         player = gameObject;
         rb = GetComponent<Rigidbody2D>();
+        GameManager.Instance.PacmanPowerUpEvent += GetPoweredUpInfo;
     }
 
     private void FixedUpdate()
@@ -39,5 +41,34 @@ public class Player : MonoBehaviour, IMoveable
     public void SetPosition(Vector2 position)
     {
         gameObject.transform.position = position;
+    }
+    private void GetPoweredUpInfo(bool isPacPoweredUp)
+    {
+        pacPoweredUp= isPacPoweredUp;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(gameObject.tag=="pacman" && collision.gameObject.tag=="ghost")
+        {
+            if(pacPoweredUp)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else if(gameObject.tag=="ghost" && collision.gameObject.tag == "pacman")
+        {
+            if (pacPoweredUp)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
     }
 }

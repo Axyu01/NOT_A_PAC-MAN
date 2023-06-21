@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: b5d964309aa672b4e9a439e6080d36dd
   - enabled: 1
-    path: Assets/Scenes/SosivoTestScene.unity
+    path: Assets/Scenes/Duplicate.unity
     guid: 5a1147b9d35b3454e87bc948888426e4
   m_configObjects: {}

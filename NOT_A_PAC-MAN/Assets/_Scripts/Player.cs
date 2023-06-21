@@ -87,7 +87,10 @@ public class Player : MonoBehaviour, IMoveable
             }
             else if (gameObject.tag == "ghost")
             {
-                speed = 1f + (GHOST_SPEED - 2f) / GameManager.Instance.NumberOfPlayers;
+                if (GameManager.Instance.NumberOfPlayers == 0)
+                    speed = GHOST_SPEED;
+                else
+                    speed = 1f + (GHOST_SPEED - 2f) / GameManager.Instance.NumberOfPlayers;
                 spriteRenderer.color = baseColor;
             }
         }

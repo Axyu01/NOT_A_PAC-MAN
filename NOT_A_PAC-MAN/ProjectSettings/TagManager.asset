@@ -12,6 +12,7 @@ TagManager:
   - point
   - powerup
   - empty
+  - mapgen
   layers:
   - Default
   - TransparentFX

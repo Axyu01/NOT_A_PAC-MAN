@@ -6,15 +6,17 @@ public class Player : MonoBehaviour, IMoveable
 {
     GameObject player;
     private float speed = 1f;
-    private bool pacPoweredUp=false;
+    private bool pacPoweredUp = false;
     Vector2Int dir = Vector2Int.zero;
     public Vector2Int Direction { get { return dir; } private set { dir = value; } }
-    public Vector2 Position { get { return transform.position; }}//moze overengineering ale co tam xd,bedzie czytelne w kontrolerze
+    public Vector2 Position { get { return transform.position; } }//moze overengineering ale co tam xd,bedzie czytelne w kontrolerze
     Rigidbody2D rb;
+    Animator anim;
     void Start()
     {
         player = gameObject;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         GameManager.Instance.PacmanPowerUpEvent += GetPoweredUpInfo;
     }
 
@@ -36,6 +38,9 @@ public class Player : MonoBehaviour, IMoveable
         dir.y += (IDir.down == true ? -1 : 0);
         dir.x += (IDir.right == true ? 1 : 0);
         dir.x += (IDir.left == true ? -1 : 0);
+        if (dir.x != 0)
+            GetComponent<SpriteRenderer>().flipX = dir.x < 0 ? true : false;
+        anim.SetFloat("IsFacingY", dir.y);
     }
 
     public void SetPosition(Vector2 position)
@@ -44,13 +49,13 @@ public class Player : MonoBehaviour, IMoveable
     }
     private void GetPoweredUpInfo(bool isPacPoweredUp)
     {
-        pacPoweredUp= isPacPoweredUp;
+        pacPoweredUp = isPacPoweredUp;
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(gameObject.tag=="pacman" && collision.gameObject.tag=="ghost")
+        if (gameObject.tag == "pacman" && collision.gameObject.tag == "ghost")
         {
-            if(pacPoweredUp)
+            if (pacPoweredUp)
             {
 
             }
@@ -59,7 +64,7 @@ public class Player : MonoBehaviour, IMoveable
 
             }
         }
-        else if(gameObject.tag=="ghost" && collision.gameObject.tag == "pacman")
+        else if (gameObject.tag == "ghost" && collision.gameObject.tag == "pacman")
         {
             if (pacPoweredUp)
             {

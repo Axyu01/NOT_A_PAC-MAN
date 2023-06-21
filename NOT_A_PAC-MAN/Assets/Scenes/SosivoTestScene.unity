@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3986882044204702811, guid: a138597b12d3ac54eb3ffa88b7f3ddd9, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3986882044204702811, guid: a138597b12d3ac54eb3ffa88b7f3ddd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -492,7 +492,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 0.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -521,7 +521,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &989437135
 MonoBehaviour:
@@ -532,10 +532,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 989437131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 493b843d79796e040b5ee8e430168950, type: 3}
+  m_Script: {fileID: 11500000, guid: eb4bd594cf5e0fd4f823ee2ffb4102f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 4900000, guid: d1a062abfa3def84ea7739e78be69d3a, type: 3}
 --- !u!1001 &1014337748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1254,7 +1253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3986882044204702811, guid: df3cd0fb8cfae4a4d9a953e9de416cb7, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3986882044204702811, guid: df3cd0fb8cfae4a4d9a953e9de416cb7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1363,7 +1362,7 @@ GameObject:
   - component: {fileID: 1776896431}
   m_Layer: 0
   m_Name: MapGen
-  m_TagString: Untagged
+  m_TagString: mapgen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1414,7 +1413,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &600395163910756551
 PrefabInstance:

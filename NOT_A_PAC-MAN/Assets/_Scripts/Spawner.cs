@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] GameObject toSpawn;
-    private void Awake()
+    //[SerializeField] GameObject toSpawn;
+    private void Start()
     {
-        Instantiate(toSpawn, transform);
+        GameManager.Instance.RegisterGhostSpawner(this);
+        //Instantiate(toSpawn, transform);
     }
 }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IMoveable
 {
+    const float PACMAN_SPEED = 4f;
+    const float GHOST_SPEED = 5f;
+    [SerializeField]
+    Color baseColor=Color.white;
     GameObject player;
     private float speed = 1f;
     private bool pacPoweredUp=false;
@@ -16,6 +20,18 @@ public class Player : MonoBehaviour, IMoveable
         player = gameObject;
         rb = GetComponent<Rigidbody2D>();
         GameManager.Instance.PacmanPowerUpEvent += GetPoweredUpInfo;
+
+        if (gameObject.tag == "pacman")
+        {
+                speed = PACMAN_SPEED;
+        }
+        else if (gameObject.tag == "ghost")
+        {
+            if(GameManager.Instance.NumberOfPlayers==0)
+                speed = GHOST_SPEED;
+            else
+                speed =1f+ (GHOST_SPEED-2f) / GameManager.Instance.NumberOfPlayers;
+        }
     }
 
     private void FixedUpdate()
@@ -45,6 +61,31 @@ public class Player : MonoBehaviour, IMoveable
     private void GetPoweredUpInfo(bool isPacPoweredUp)
     {
         pacPoweredUp= isPacPoweredUp;
+        SpriteRenderer spriteRenderer= gameObject.GetComponent<SpriteRenderer>();
+        if(pacPoweredUp)
+        {
+            if (gameObject.tag == "pacman")
+            {
+                speed = PACMAN_SPEED*1.5f;
+            }
+            else if (gameObject.tag == "ghost")
+            {
+                speed = 1f;
+                spriteRenderer.color= Color.cyan;
+            }
+        }
+        else
+        {
+            if (gameObject.tag == "pacman")
+            {
+                speed = PACMAN_SPEED;
+            }
+            else if (gameObject.tag == "ghost")
+            {
+                speed = 1f + (GHOST_SPEED - 2f) / GameManager.Instance.NumberOfPlayers;
+                spriteRenderer.color = baseColor;
+            }
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -52,22 +93,11 @@ public class Player : MonoBehaviour, IMoveable
         {
             if(pacPoweredUp)
             {
-
+                GameManager.Instance.ScoreKill(gameObject.GetComponent<Player>());
             }
             else
             {
-
-            }
-        }
-        else if(gameObject.tag=="ghost" && collision.gameObject.tag == "pacman")
-        {
-            if (pacPoweredUp)
-            {
-
-            }
-            else
-            {
-
+                GameManager.Instance.RoundEnd();
             }
         }
     }

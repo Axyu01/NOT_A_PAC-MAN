@@ -22,25 +22,72 @@ public class GameManager : MonoBehaviour
     private int score;
     private bool pacmanPoweredUp;
 
-    [SerializeField]
     public string localCharacterID = "none";
     public string[] RemoteCharacterIDs = { "none", "none", "none", "none"};
+
+    public int NumberOfPlayers {
+        get {
+            int numberOfPlayers = 0;
+            foreach (string player in GameManager.Instance.RemoteCharacterIDs)
+            {
+                if (player != "none")
+                {
+                    numberOfPlayers++;
+                }
+            }
+            if (GameManager.Instance.localCharacterID != "none")
+                numberOfPlayers++;
+            return numberOfPlayers;
+        }
+    }
+    List<Spawner> pacmanSpawners;
+    List<Spawner> ghostSpawners;
+    Player pacman;
+    Player[] ghosts;
+    int killStreak = 0;
+    //Prafabs to instatiate
     [SerializeField]
     GameObject pacmanPrefab;
     [SerializeField]
     GameObject ghostPrefab;
     [SerializeField]
+    GameObject localController;
+    [SerializeField]
+    GameObject remoteController;
+    //SceneLoading
+    [SerializeField]
     public string gameplaySceneName = "none";
     [SerializeField]
     public string lobbySceneName = "none";
+    //Singleton pattern
     public static GameManager Instance { get { return instance; } private set { instance = value; } }
     private static GameManager instance = null;
+    //Function calls
     public delegate void ScoreChangeDelegate(int newScore);
     public ScoreChangeDelegate ScoreChangeEvent;
     public delegate void ChaseChangeDelegate(bool isPacmanPoweredUp);
     public ChaseChangeDelegate PacmanPowerUpEvent;
     public delegate void TimeLeftChangeDelegate(float timeLeft);
     public TimeLeftChangeDelegate TimeLeftChangeEvent;
+
+    public void GameReset()
+    {
+        score = 0;
+        localCharacterID = "none";
+        RemoteCharacterIDs = new string[] { "none", "none", "none", "none" };
+        RoundReset();
+    }
+    public void RoundReset()
+    {
+        maxPoints = 0;
+        currentPoints = 0;
+        pacmanPoweredUp = false;
+        notConvertedTime = 0;
+        gameTimeLeft = GAME_TIME;
+        pacmanSpawners = new List<Spawner>();
+        ghostSpawners = new List<Spawner>();
+    }
+
     void Awake()
     {
         if (instance != null)
@@ -77,6 +124,7 @@ public class GameManager : MonoBehaviour
             powerUpTimeLeft -= Time.deltaTime;
             if (powerUpTimeLeft <= 0f)
             {
+                killStreak = 0;
                 pacmanPoweredUp= false;
                 PacmanPowerUpEvent?.Invoke(false);
             }
@@ -93,20 +141,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(lobbySceneName);
         }
     }
-    public void GameReset()
-    {
-        localCharacterID = "none";
-        RemoteCharacterIDs = new string[]{ "none", "none", "none", "none"};
-        RoundReset();
-}
-    public void RoundReset()
-    {
-        maxPoints = 0;
-        currentPoints = 0;
-        pacmanPoweredUp = false;
-        notConvertedTime = 0;
-        gameTimeLeft = GAME_TIME;
-    }
     private void addScore(int dScore)
     {
         score += dScore;
@@ -121,6 +155,25 @@ public class GameManager : MonoBehaviour
         currentPoints++;
         addScore(POINT_SCORE);     
     }
+    public void ScoreKill(Player player)
+    {
+        if (player.gameObject.activeSelf == false)
+            return;
+        player.gameObject.SetActive(false);
+        killStreak++;
+        addScore(200 * killStreak);
+        StartCoroutine(PutOnDeathTimer(player));
+    }
+    IEnumerator PutOnDeathTimer(Player player)
+    {
+        yield return new WaitForSeconds(5);
+        Respawn(player);
+    }
+    public void Respawn(Player player)
+    {
+        player.gameObject.SetActive(true);
+        player.transform.position = ghostSpawners[(int)(Mathf.Round((ghostSpawners.Count-1)*Random.value))].transform.position;
+    }
     public void PowerUp()
     {
         powerUpTimeLeft = POWER_UP_TIME;
@@ -130,5 +183,17 @@ public class GameManager : MonoBehaviour
     public bool GetPacPowerupState()
     {
         return pacmanPoweredUp;
+    }
+    public void RegisterPacManSpawner(Spawner spawner)
+    {
+        pacmanSpawners.Add(spawner);
+    }
+    public void RegisterGhostSpawner(Spawner spawner)
+    {
+        ghostSpawners.Add(spawner);
+    }
+    public void RoundEnd()
+    {
+
     }
 }

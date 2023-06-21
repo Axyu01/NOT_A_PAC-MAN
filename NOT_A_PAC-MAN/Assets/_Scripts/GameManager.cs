@@ -194,6 +194,6 @@ public class GameManager : MonoBehaviour
     }
     public void RoundEnd()
     {
-
+        SceneManager.LoadScene(lobbySceneName);
     }
 }

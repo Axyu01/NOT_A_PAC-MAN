@@ -393,7 +393,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 24056951a4b49034f918ee67a170dd5f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6daa593a0575c99498101760af56e4c5, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -628,8 +628,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -370.2453, y: 145.11453}
-  m_SizeDelta: {x: 186.3094, y: 95.7737}
+  m_AnchoredPosition: {x: -325.9522, y: 145.11453}
+  m_SizeDelta: {x: 274.8956, y: 95.7737}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1094700204
 MonoBehaviour:
@@ -652,8 +652,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 24056951a4b49034f918ee67a170dd5f, type: 3}
-    m_FontSize: 30
+    m_Font: {fileID: 12800000, guid: 6daa593a0575c99498101760af56e4c5, type: 3}
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -661,7 +661,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Score:0
@@ -1141,8 +1141,8 @@ MonoBehaviour:
   objects:
   - {fileID: 1249462657024397524, guid: 371f5d5079368ec418676dd28d561e0f, type: 3}
   - {fileID: 1249462657024397524, guid: f8581f779a6e388419c6788f89864c01, type: 3}
-  - {fileID: 1249462657024397524, guid: a138597b12d3ac54eb3ffa88b7f3ddd9, type: 3}
-  - {fileID: 1249462657024397524, guid: df3cd0fb8cfae4a4d9a953e9de416cb7, type: 3}
+  - {fileID: 1249462657024397524, guid: 517f8fcc1fcbea348ac05b537dabe6a6, type: 3}
+  - {fileID: 1249462657024397524, guid: 25a0a66b88f59dc4993c47adbca1edab, type: 3}
   - {fileID: 1249462657024397524, guid: f393c622c1ed2b74fa9ec4a4f0b6d52d, type: 3}
   - {fileID: 1249462657024397524, guid: 2ba4e36c216fcf54f88062022d0c9ed7, type: 3}
   parser: {fileID: 1493691994}
@@ -1467,6 +1467,14 @@ PrefabInstance:
     - target: {fileID: 600395162571243875, guid: df2b2ec933179834cad09d06b9ea8c3d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 600395162571243876, guid: df2b2ec933179834cad09d06b9ea8c3d, type: 3}
+      propertyPath: lobbySceneName
+      value: Lobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 600395162571243876, guid: df2b2ec933179834cad09d06b9ea8c3d, type: 3}
+      propertyPath: gameplaySceneName
+      value: SosivoTestScene
       objectReference: {fileID: 0}
     - target: {fileID: 600395162571243877, guid: df2b2ec933179834cad09d06b9ea8c3d, type: 3}
       propertyPath: m_Name

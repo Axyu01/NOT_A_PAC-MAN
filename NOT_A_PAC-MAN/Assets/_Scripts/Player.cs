@@ -95,13 +95,13 @@ public class Player : MonoBehaviour, IMoveable
             }
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (gameObject.tag == "pacman" && collision.gameObject.tag == "ghost")
         {
             if (pacPoweredUp)
             {
-                GameManager.Instance.ScoreKill(gameObject.GetComponent<Player>());
+                GameManager.Instance.ScoreKill(collision.gameObject.GetComponent<Player>());
             }
             else
             {

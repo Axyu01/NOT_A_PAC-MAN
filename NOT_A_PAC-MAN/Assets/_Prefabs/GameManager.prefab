@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTimeLeft: 0
+  notConvertedTime: 0
   localCharacterID: none
   RemoteCharacterIDs:
   - none
@@ -53,5 +54,7 @@ MonoBehaviour:
   - none
   pacmanPrefab: {fileID: 1249462657024397524, guid: df3cd0fb8cfae4a4d9a953e9de416cb7, type: 3}
   ghostPrefab: {fileID: 1249462657024397524, guid: a138597b12d3ac54eb3ffa88b7f3ddd9, type: 3}
-  gameplaySceneName: none
-  lobbySceneName: none
+  localController: {fileID: 0}
+  remoteController: {fileID: 0}
+  gameplaySceneName: SosivoTestScene
+  lobbySceneName: Lobby

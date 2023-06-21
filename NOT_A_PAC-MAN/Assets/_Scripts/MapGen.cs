@@ -20,9 +20,9 @@ public class MapGen : MonoBehaviour
         {
             for (int x = 0; x < map[y].Length; x++)
             {
-                Instantiate(objects[map[y][x]], transform.position + new Vector3(x, -y, 0), Quaternion.identity);
+                Instantiate(objects[map[y][x]], transform.position + new Vector3(x, -y, 0), Quaternion.identity, transform);
             }
         }
-        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<mapSizePositionAdjuster>().changeCam(map.Length,map[1].Length);
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<mapSizePositionAdjuster>().changeCam(map.Length, map[1].Length);
     }
 }

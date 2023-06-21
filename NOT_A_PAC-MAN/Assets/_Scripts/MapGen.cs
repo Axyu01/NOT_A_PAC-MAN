@@ -23,5 +23,6 @@ public class MapGen : MonoBehaviour
                 Instantiate(objects[map[y][x]], transform.position + new Vector3(x, -y, 0), Quaternion.identity);
             }
         }
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<mapSizePositionAdjuster>().changeCam(map.Length,map[1].Length);
     }
 }

@@ -14,8 +14,8 @@ public class mapSizePositionAdjuster : MonoBehaviour
     public void changeCam(int width,int height)
     {
         Vector3 pos = Vector3.zero;
-        GetComponent<Camera>().orthographicSize = GetComponent<Camera>().orthographicSize*Mathf.Max(width,height/2)+1; 
-        pos.y = mg.transform.position.x-(width/2) +0.5f;
+        GetComponent<Camera>().orthographicSize = GetComponent<Camera>().orthographicSize*Mathf.Max(width,height/2)+2; 
+        pos.y = mg.transform.position.x-(width/2) +1.5f;
         pos.x = mg.transform.position.y+(height/2) -0.5f;
         pos.z = -10;
         transform.position = pos;

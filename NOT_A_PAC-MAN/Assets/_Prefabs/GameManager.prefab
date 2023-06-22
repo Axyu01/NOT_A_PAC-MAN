@@ -44,17 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30339ae2207b5345bd000f76f558098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: b66b001cece7c1448b9ff87ed787bda9, type: 2}
   gameTimeLeft: 0
   notConvertedTime: 0
-  localCharacterID: none
-  RemoteCharacterIDs:
-  - none
-  - none
-  - none
-  - none
   pacmanPrefab: {fileID: 1249462657024397524, guid: df3cd0fb8cfae4a4d9a953e9de416cb7, type: 3}
   ghostPrefab: {fileID: 1249462657024397524, guid: a138597b12d3ac54eb3ffa88b7f3ddd9, type: 3}
-  localController: {fileID: 0}
-  remoteController: {fileID: 0}
+  localControllerPrefab: {fileID: 6206249804510716741, guid: 111d91d902aa01c488081af6a8409c5b, type: 3}
+  remoteControllerPrefab: {fileID: 205981823449667031, guid: 34431eff9d35295488bc28ba9f62e59d, type: 3}
   gameplaySceneName: SosivoTestScene
-  lobbySceneName: Lobby
+  endSceneName: ScoreScene

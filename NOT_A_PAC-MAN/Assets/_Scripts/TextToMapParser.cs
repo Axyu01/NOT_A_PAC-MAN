@@ -24,7 +24,7 @@ public class TextToMapParser : MonoBehaviour
         }
     }
 
-    static int[][] LoadArraysFromFile(TextAsset inputFile, out int numArrays, out int arraySize)
+    public static int[][] LoadArraysFromFile(TextAsset inputFile, out int numArrays, out int arraySize)
     {
         int[][] arrays = null;
         numArrays = 0;

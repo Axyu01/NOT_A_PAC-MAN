@@ -28,7 +28,7 @@ public class LocalController : Controller
     private void FixedUpdate()
     {
         NetworkManager.Instance.SendMsg($"PlayerState({dir.up},{dir.down},{dir.left},{dir.right}," +
-            $"{player.Position.x.ToString(CultureInfo.InvariantCulture)}|{player.Position.y.ToString(CultureInfo.InvariantCulture)});");
+            $"{player.Position.x.ToString(CultureInfo.InvariantCulture)},{player.Position.y.ToString(CultureInfo.InvariantCulture)});");
         //NetworkManager.Instance.SendMsg($"Broadcast(direction|{dir.up}|{dir.down}|{dir.left}|{dir.right});");
         //NetworkManager.Instance.SendMsg($"Broadcast(position|{player.Position.x.ToString(CultureInfo.InvariantCulture)}|{player.Position.y.ToString(CultureInfo.InvariantCulture)});");
     }

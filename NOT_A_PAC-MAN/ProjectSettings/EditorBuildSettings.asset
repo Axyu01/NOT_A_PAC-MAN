@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Duplicate.unity
     guid: 5a1147b9d35b3454e87bc948888426e4
+  - enabled: 1
+    path: Assets/Scenes/SosivoTestScene.unity
+    guid: ff790e2215b497045bacce2f2e41f9a7
+  - enabled: 1
+    path: Assets/Scenes/ScoreScene.unity
+    guid: b34e8f80b59b32347bcdbf08aabcca2f
   m_configObjects: {}

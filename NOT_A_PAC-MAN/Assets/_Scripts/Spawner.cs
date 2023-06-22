@@ -7,7 +7,10 @@ public class Spawner : MonoBehaviour
     //[SerializeField] GameObject toSpawn;
     private void Start()
     {
-        GameManager.Instance.RegisterGhostSpawner(this);
+        if(tag =="pacmanSpawner")
+            GameManager.Instance.RegisterPacManSpawner(this);
+        else if (tag == "ghostSpawner")
+            GameManager.Instance.RegisterGhostSpawner(this);
         //Instantiate(toSpawn, transform);
     }
 }

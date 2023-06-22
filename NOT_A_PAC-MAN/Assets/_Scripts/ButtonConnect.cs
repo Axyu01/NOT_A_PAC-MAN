@@ -8,7 +8,11 @@ using UnityEngine.UIElements;
 public class ButtonConnect : MonoBehaviour
 {
     [SerializeField]
+    GameData gameData;
+    [SerializeField]
     Text ipText;
+    [SerializeField]
+    Text portText;
     [SerializeField]
     Text nickText;
     [SerializeField]
@@ -40,13 +44,23 @@ public class ButtonConnect : MonoBehaviour
     public void OnConnectedToServer()
     {
         Debug.Log("Pressed!");
-        if(NetworkManager.Instance!=null && ipText !=null)
+        try
         {
-            NetworkManager.Instance.ResetManager();
-            NetworkManager.Instance.StartListening(ipText.text);
-            NetworkManager.Instance.SendMsg($"SetMyNickname({nickText.text});");
-            //Thread.Sleep(1000);
-            //NetworkManager.Instance.SendMsg("Witaj Craksys, zolnierek zhackowal ci serwer, oddaj v-bucksy bambiku");
+            if (NetworkManager.Instance != null && ipText != null)
+            {
+                NetworkManager.Instance.ResetManager();
+                NetworkManager.Instance.StartListening(ipText.text, int.Parse(portText.text));
+                NetworkManager.Instance.SendMsg($"SetMyNickname({nickText.text});");
+                gameData.ResetData();//redudant becouse of function bollow that contains it
+                GameManager.Instance.GameReset();
+                gameData.LocalNick= nickText.text;
+                //Thread.Sleep(1000);
+                //NetworkManager.Instance.SendMsg("Witaj Craksys, zolnierek zhackowal ci serwer, oddaj v-bucksy bambiku");
+            }
+        }
+        catch
+        {
+            Debug.LogWarning("Error with server connection!");
         }
     }
 }

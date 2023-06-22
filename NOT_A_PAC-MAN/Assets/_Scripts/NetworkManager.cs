@@ -52,14 +52,15 @@ public class NetworkManager : MonoBehaviour
         //getMsgThread = new Thread(getMsg);
         //getMsgThread.Start();
     }
-    public void StartListening(string serverAdress)
+    public void StartListening(string serverAdress,int portNumber)
     {
         if (tcpClient != null)
         {
             tcpClient.Close();
         }
         tcpClient = new TcpClient();
-        tcpClient.Connect(IPAddress.Parse(serverAdress),PORT_NUMBER);
+        //tcpClient.Connect(IPAddress.Parse(serverAdress),PORT_NUMBER);
+        tcpClient.Connect(IPAddress.Parse(serverAdress), portNumber);
         Debug.Log("Connected to " + serverAdress);
         stream = tcpClient.GetStream();
         StartCoroutine(getMsg());
@@ -71,6 +72,7 @@ public class NetworkManager : MonoBehaviour
         StopAllCoroutines();
         //if (getMsgThread != null)
             //getMsgThread.Abort();
+        if(tcpClient != null)
         tcpClient.Close();
 
     }

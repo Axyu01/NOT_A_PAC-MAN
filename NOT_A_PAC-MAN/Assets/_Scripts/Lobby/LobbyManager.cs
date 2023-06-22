@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class LobbyManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField]
+    GameData gameData;
     bool ready = false;
     [SerializeField]
     GameObject readyTick;
@@ -39,7 +41,7 @@ Coroutine check_game_readiness = null;
 IEnumerator checkGameState()
 {
     yield return new WaitForSeconds(0.5f);
-        //NetworkManager.Instance.SendMsg($"IsReady();");
+        NetworkManager.Instance.SendMsg($"isStarted();");
         check_game_readiness = null;
 }
 public void ClickReady()
@@ -52,11 +54,11 @@ public void ClickReady()
     }
     private void readReady(string message)
     {
-        if (RemoteFunction.GetFunctionName(message) == "SetReady")
+        if (RemoteFunction.GetFunctionName(message) == "Ready")
         {
             updateReady(true);
         }
-        else if(RemoteFunction.GetFunctionName(message) == "SetNotReady")
+        else if(RemoteFunction.GetFunctionName(message) == "NotReady")
         {
             updateReady(false);
         }
@@ -68,13 +70,26 @@ public void ClickReady()
             serverInfoText.text = RemoteFunction.GetFunctionArguments(message)[0];
             serverInfo.SetActive(true);
         }
-        else if(RemoteFunction.GetFunctionName(message) == "PlayerCount")
+        else if (RemoteFunction.GetFunctionName(message) == "PlayerCount")
         {
-            playerCountText.text= $"Players {RemoteFunction.GetFunctionArguments(message)[0]}/5";
+            playerCountText.text = $"Players {RemoteFunction.GetFunctionArguments(message)[0]}/5";
+        }
+        else if (RemoteFunction.GetFunctionName(message) == "NotStarted")
+        {
+            playerCountText.text = $"Players {RemoteFunction.GetFunctionArguments(message)[0]}/5";
+            string[] args = RemoteFunction.GetFunctionArguments(message);
+            string characterID = "";
+            string nick = "";
+            for (int i = 2; i < args.Length; i += 2)
+            {
+                characterID = args[i];
+                nick = args[i - 1];
+                gameData.AddPlayer(nick, characterID);
+            }
         }
         else if (RemoteFunction.GetFunctionName(message) == "Started")
         {
-            //StartGame();
+            StartGame();
         }
     }
     private void updateReady(bool val)

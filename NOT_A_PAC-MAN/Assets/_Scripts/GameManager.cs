@@ -7,10 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    const int POINT_SCORE = 25;
-    const float ONE_POINT_TIME = 0.3f;
+    const int POINT_SCORE = 5;
+    const int POWERUP_SCORE = 95;
+    const float ONE_POINT_TIME = 0.5f;
+    const float ADDITIONAL_POINT_TIME = 0.1f;
     const float POWER_UP_TIME = 5.0f;
-    const float GAME_TIME = 20f;
+    const float GAME_TIME = 150f;
+    [SerializeField]
+    GameData gameData;
     //for end of round detection
     private float maxPoints;
     private float currentPoints;
@@ -19,31 +23,28 @@ public class GameManager : MonoBehaviour
     public float notConvertedTime;
     private float powerUpTimeLeft;
 
-    private int score;
     private bool pacmanPoweredUp;
-
-    public string localCharacterID = "none";
-    public string[] RemoteCharacterIDs = { "none", "none", "none", "none"};
 
     public int NumberOfPlayers {
         get {
             int numberOfPlayers = 0;
-            foreach (string player in GameManager.Instance.RemoteCharacterIDs)
+            foreach (string player in gameData.RemoteCharacterIDs)
             {
                 if (player != "none")
                 {
                     numberOfPlayers++;
                 }
             }
-            if (GameManager.Instance.localCharacterID != "none")
+            if (gameData.LocalCharacterID != "none")
                 numberOfPlayers++;
             return numberOfPlayers;
         }
     }
     List<Spawner> pacmanSpawners;
     List<Spawner> ghostSpawners;
-    Player pacman;
-    Player[] ghosts;
+    Player localPlayer;
+    List<Player> remotePlayers;
+    MapGen mapGen; 
     int killStreak = 0;
     //Prafabs to instatiate
     [SerializeField]
@@ -51,30 +52,29 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject ghostPrefab;
     [SerializeField]
-    GameObject localController;
+    GameObject localControllerPrefab;
     [SerializeField]
-    GameObject remoteController;
+    GameObject remoteControllerPrefab;
     //SceneLoading
     [SerializeField]
     public string gameplaySceneName = "none";
     [SerializeField]
-    public string lobbySceneName = "none";
+    public string endSceneName = "none";
     //Singleton pattern
     public static GameManager Instance { get { return instance; } private set { instance = value; } }
     private static GameManager instance = null;
     //Function calls
     public delegate void ScoreChangeDelegate(int newScore);
-    public ScoreChangeDelegate ScoreChangeEvent;
+    public event ScoreChangeDelegate ScoreChangeEvent;
     public delegate void ChaseChangeDelegate(bool isPacmanPoweredUp);
-    public ChaseChangeDelegate PacmanPowerUpEvent;
+    public event ChaseChangeDelegate PacmanPowerUpEvent;
     public delegate void TimeLeftChangeDelegate(float timeLeft);
-    public TimeLeftChangeDelegate TimeLeftChangeEvent;
-
+    public event TimeLeftChangeDelegate TimeLeftChangeEvent;
+    private int score;
     public void GameReset()
     {
         score = 0;
-        localCharacterID = "none";
-        RemoteCharacterIDs = new string[] { "none", "none", "none", "none" };
+        gameData.ResetData();
         RoundReset();
     }
     public void RoundReset()
@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour
         gameTimeLeft = GAME_TIME;
         pacmanSpawners = new List<Spawner>();
         ghostSpawners = new List<Spawner>();
+        localPlayer= null;
+        remotePlayers= new List<Player>();
     }
 
     void Awake()
@@ -110,15 +112,24 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        gameTimeLeft-=Time.deltaTime;
-        TimeLeftChangeEvent?.Invoke(gameTimeLeft);
-        //if(gameTimeLeft < 0)
+        if (localPlayer == null)
+            return;
+        if (gameTimeLeft > 0f)
+        {
+            gameTimeLeft -= Time.deltaTime;
+            TimeLeftChangeEvent?.Invoke(gameTimeLeft);
+            //if(gameTimeLeft < 0)
             //RoundReset();
-        notConvertedTime += Time.deltaTime;
-        int additionalScore = (int)(notConvertedTime/ONE_POINT_TIME);
-        notConvertedTime -= additionalScore * ONE_POINT_TIME;
-        score += additionalScore;
-        ScoreChangeEvent?.Invoke(score);
+            notConvertedTime += Time.deltaTime;
+            int additionalScore = (int)(notConvertedTime / ONE_POINT_TIME);
+            notConvertedTime -= additionalScore * ONE_POINT_TIME;
+            score += additionalScore;
+            ScoreChangeEvent?.Invoke(score);
+        }
+        else
+        {
+            RoundEnd();
+        }
         if (powerUpTimeLeft > 0f)
         {
             powerUpTimeLeft -= Time.deltaTime;
@@ -138,7 +149,7 @@ public class GameManager : MonoBehaviour
         }
         else if (RemoteFunction.GetFunctionName(message) == "GameEnd")//for nickname repeat
         {
-            SceneManager.LoadScene(lobbySceneName);
+            SceneManager.LoadScene(endSceneName);
         }
     }
     private void addScore(int dScore)
@@ -153,6 +164,8 @@ public class GameManager : MonoBehaviour
     public void ScorePoint()
     {
         currentPoints++;
+        if(currentPoints== maxPoints)
+            RoundEnd();
         addScore(POINT_SCORE);     
     }
     public void ScoreKill(Player player)
@@ -171,11 +184,62 @@ public class GameManager : MonoBehaviour
     }
     public void Respawn(Player player)
     {
+        StartCoroutine(delayedRespawn(player));
+    }
+    IEnumerator delayedRespawn(Player player)
+    {
+        bool playerfound = true;
+        Vector2 spawnPosition = Vector2.zero;
+        while (playerfound)
+        {
+            if(player.gameObject.tag=="pacman")
+            {
+                int rand = (int)(Mathf.Round((pacmanSpawners.Count - 1) * Random.value));
+                Debug.Log($"random value {rand}");
+                spawnPosition = pacmanSpawners[rand].transform.position;
+                break;
+            }
+            {
+                Vector2 randomSpawnerPosition = ghostSpawners[(int)(Mathf.Round((ghostSpawners.Count - 1) * Random.value))].transform.position;
+                Collider2D[] colliders = Physics2D.OverlapAreaAll(randomSpawnerPosition - Vector2.one * 0.5f, randomSpawnerPosition + Vector2.one * 0.5f);
+                foreach (Collider2D collider in colliders)
+                {
+                    Player foundPlayer = collider.GetComponent<Player>();
+
+                    if (foundPlayer == null)
+                    {
+                        playerfound = false;
+                        spawnPosition = randomSpawnerPosition;
+                        break;
+                    }
+                }
+            }
+            if (playerfound == false)
+                break;
+            foreach (Spawner spawner in ghostSpawners)
+            {
+                Vector2 someSpawnerPosition = spawner.transform.position;
+                Collider2D[] colliders = Physics2D.OverlapAreaAll(someSpawnerPosition - Vector2.one * 0.5f, someSpawnerPosition + Vector2.one * 0.5f);
+                foreach (Collider2D collider in colliders)
+                {
+                    Player foundPlayer = collider.GetComponent<Player>();
+
+                    if (foundPlayer == null)
+                    {
+                        playerfound = false;
+                        spawnPosition = someSpawnerPosition;
+                        break;
+                    }
+                }
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+        player.transform.position = spawnPosition;
         player.gameObject.SetActive(true);
-        player.transform.position = ghostSpawners[(int)(Mathf.Round((ghostSpawners.Count-1)*Random.value))].transform.position;
     }
     public void PowerUp()
     {
+        addScore(POWERUP_SCORE);
         powerUpTimeLeft = POWER_UP_TIME;
         pacmanPoweredUp = true;
         PacmanPowerUpEvent?.Invoke(pacmanPoweredUp);
@@ -192,8 +256,58 @@ public class GameManager : MonoBehaviour
     {
         ghostSpawners.Add(spawner);
     }
+
+    public void RegisterMapGen(MapGen mapGen)
+    {
+        this.mapGen= mapGen;
+        mapGen.CreateMap();
+        StartCoroutine(lateGameStart());
+    }
+    IEnumerator lateGameStart()
+    {
+        yield return new WaitForSeconds(1.1f);
+        Controller localC = Instantiate(localControllerPrefab).GetComponent<Controller>();
+        if (gameData.LocalCharacterID == "pac")
+        {
+            localPlayer = Instantiate(pacmanPrefab).GetComponent<Player>();
+        }
+        else
+        {
+            localPlayer = Instantiate(ghostPrefab).GetComponent<Player>();
+        }
+        localC.characterID = gameData.LocalCharacterID;
+        localC.SetPlayer(localPlayer);
+        localPlayer.gameObject.SetActive(false);
+        Respawn(localPlayer);
+
+
+        for (int i = 0; i < 4; i++)
+        {
+            Controller remoteC = Instantiate(remoteControllerPrefab).GetComponent<Controller>();
+            Player remotePlayer;
+            if (gameData.RemoteCharacterIDs[i] == "pac")
+            {
+                remotePlayer = Instantiate(pacmanPrefab).GetComponent<Player>();
+            }
+            else if (gameData.RemoteCharacterIDs[i] == "gh1" || gameData.RemoteCharacterIDs[i] == "gh2" || gameData.RemoteCharacterIDs[i] == "gh3" || gameData.RemoteCharacterIDs[i] == "gh4")
+            {
+                remotePlayer = Instantiate(ghostPrefab).GetComponent<Player>();
+            }
+            else
+                continue;
+            localC.characterID = gameData.RemoteCharacterIDs[i];
+            localC.SetPlayer(remotePlayer);
+            remotePlayers.Add(remotePlayer);
+            remotePlayer.gameObject.SetActive(false);
+            Respawn(remotePlayer);
+        }
+    }
     public void RoundEnd()
     {
-        SceneManager.LoadScene(lobbySceneName);
+        if(gameTimeLeft>0f)
+            score+=(int)(gameTimeLeft / ONE_POINT_TIME)*2;
+        gameData.Endscore += score;
+        //GameReset();
+        SceneManager.LoadScene(endSceneName);
     }
 }

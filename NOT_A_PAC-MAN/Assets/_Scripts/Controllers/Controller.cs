@@ -18,4 +18,11 @@ public class Controller : MonoBehaviour
     {
         
     }
+    public void SetPlayer(Player player)
+    {
+        if(this.player == null) 
+        { 
+            this.player = player;
+        }
+    }
 }

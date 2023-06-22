@@ -28,18 +28,24 @@ public class PickCharacter : MonoBehaviour
     }
     void setChampion(string message)
     {
-        if (RemoteFunction.GetFunctionName(message)=="PickChampion")//Set Champion
+        if (RemoteFunction.GetFunctionName(message)== "NotStarted")//Set Champion
         {
             string[] args=RemoteFunction.GetFunctionArguments(message);
-            string nick = args[0];
-            if (!args[1].Equals(characterID))
-                return;
-            if(nick=="")
+            string nick = "";
+            for (int i = 2; i < args.Length; i += 2)
             {
-                pickText.text = "click this button to pick character!";
+                if (characterID == args[i])
+                {
+                    nick = args[i-1];
+                    break;
+                }
+            }
+            if (nick == "")
+            {
+                pickText.text = "click to pick character!";
             }
             else
-            { 
+            {
                 pickText.text = $"{nick} picked this character!";
             }
         }

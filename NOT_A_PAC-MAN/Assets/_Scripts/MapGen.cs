@@ -32,13 +32,13 @@ public class MapGen : MonoBehaviour
 
     private void setBorderPosition(int[][] map)
     {
-        borderMaxXY.x = map[0].Length - 0.5f;
-        borderMinXY.y = -map.Length + 0.5f;
-        borderMaxXY.y = 0.5f;
-        borderMinXY.x = -0.5f;
+        borderMaxXY.x = map[0].Length;
+        borderMinXY.y = -map.Length;
+        borderMaxXY.y = 0;
+        borderMinXY.x = 0;
     }
     public Vector4 getBorderPosition()
     {
-        return new Vector4(borderMinXY.x, borderMinXY.y, borderMinXY.x, borderMinXY.y);
+        return new Vector4(borderMinXY.x, borderMinXY.y, borderMaxXY.x, borderMaxXY.y);
     }
 }

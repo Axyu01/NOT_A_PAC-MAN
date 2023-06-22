@@ -295,8 +295,8 @@ public class GameManager : MonoBehaviour
             }
             else
                 continue;
-            localC.characterID = gameData.RemoteCharacterIDs[i];
-            localC.SetPlayer(remotePlayer);
+            remoteC.characterID = gameData.RemoteCharacterIDs[i];
+            remoteC.SetPlayer(remotePlayer);
             remotePlayers.Add(remotePlayer);
             remotePlayer.gameObject.SetActive(false);
             Respawn(remotePlayer);

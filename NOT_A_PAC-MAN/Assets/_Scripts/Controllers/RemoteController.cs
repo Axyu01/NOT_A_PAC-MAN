@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Sockets;
-using UnityEditor.ShortcutManagement;
+//using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
 public class RemoteController : Controller

@@ -44,6 +44,7 @@ public class Player : MonoBehaviour, IMoveable
     private void FixedUpdate()
     {
         applyMovement();
+        ifInBorder();
         cd -= Time.deltaTime;
         cd = Mathf.Max(0, cd);
     }
@@ -51,7 +52,6 @@ public class Player : MonoBehaviour, IMoveable
     private void applyMovement()
     {
         rb.velocity = new Vector2(dir.x, dir.y) * speed;
-        ifInBorder();
         //rb.AddForce(new Vector2(dir.x,dir.y)*speed);
     }
 

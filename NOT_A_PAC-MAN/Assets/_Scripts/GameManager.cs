@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviour
             Respawn(remotePlayer);
         }
     }
-    public void RoundEnd()
+    public void RoundEnd() //dodac game end serwerowy
     {
         if(gameTimeLeft>0f)
             score+=(int)(gameTimeLeft / ONE_POINT_TIME)*2;

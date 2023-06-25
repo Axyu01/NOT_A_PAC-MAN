@@ -7,6 +7,7 @@ using static IMoveable;
 public class LocalController : Controller
 {
     IMoveable.dir dir;
+    int currDir = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +24,27 @@ public class LocalController : Controller
         player.SetMoveDirection(dir);
         if (Input.GetKeyDown(KeyCode.Escape))
             NetworkManager.Instance.SendMsg("EndGame();");
-        
+
     }
     private void FixedUpdate()
     {
-        NetworkManager.Instance.SendMsg($"PlayerState({dir.up},{dir.down},{dir.left},{dir.right}," +
+        if (dir.up)
+        {
+            currDir = 0;
+        }
+        else if (dir.down)
+        {
+            currDir = 1;
+        }
+        else if (dir.left)
+        {
+            currDir = 2;
+        }
+        else if (dir.right)
+        {
+            currDir = 3;
+        }
+        NetworkManager.Instance.SendMsg($"PlayerState({currDir}," +
             $"{player.Position.x.ToString(CultureInfo.InvariantCulture)},{player.Position.y.ToString(CultureInfo.InvariantCulture)});");
         //NetworkManager.Instance.SendMsg($"Broadcast(direction|{dir.up}|{dir.down}|{dir.left}|{dir.right});");
         //NetworkManager.Instance.SendMsg($"Broadcast(position|{player.Position.x.ToString(CultureInfo.InvariantCulture)}|{player.Position.y.ToString(CultureInfo.InvariantCulture)});");
